@@ -12,10 +12,7 @@
 	import { Square, X, Minus } from '@lucide/svelte';
 </script>
 
-<div
-	class="absolute rounded-md border bg-gray-200"
-	style="left:{left}px; top:{top}px; width:{width}px; height:{height}px;"
->
+<div class="absolute rounded-md border bg-gray-200" style="left:{left}px; top:{top}px;">
 	<div class="flex w-full justify-between rounded-t-sm bg-gray-500">
 		<div class="flex items-center justify-center">
 			<small class="px-2 text-white">{title}</small>
@@ -26,7 +23,10 @@
 			<TitleBarButton type="destructive" isLast={true}><X strokeWidth={1} /></TitleBarButton>
 		</ul>
 	</div>
-	<article>
+	<article
+		class="h-min overflow-y-scroll overscroll-none"
+		style=" width:{width}px; max-height:{height}px;"
+	>
 		{@render children?.()}
 	</article>
 </div>
