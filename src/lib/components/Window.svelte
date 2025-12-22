@@ -5,12 +5,29 @@
 		top,
 		width,
 		height,
+		z,
+		hasFocus,
+		id,
 		children
-	}: { title: string; left: number; top: number; width: number; height: number; children?: any } =
-		$props();
+	}: {
+		title: string;
+		left: number;
+		top: number;
+		width: number;
+		height: number;
+		z: number;
+		hasFocus: boolean;
+		id: number;
+		children?: any;
+	} = $props();
 	import TitleBarButton from './TitleBarButton.svelte';
 	import { Square, X, Minus } from '@lucide/svelte';
-	import { showTitles, windowControlPosition, windowControlStyle } from '$lib/context';
+	import {
+		showTitles,
+		windowControlPosition,
+		windowControlStyle,
+		setFocus
+	} from '$lib/context.svelte';
 	import TitleBarDot from './TitleBarDot.svelte';
 
 	let dragging = $state(false);
@@ -23,6 +40,7 @@
 
 	function onDoubleClickTitleBar(event: MouseEvent) {
 		if (event.button !== 0) return;
+		setFocus(id);
 		dragging = true;
 		dragStartX = event.clientX;
 		dragStartY = event.clientY;
@@ -60,8 +78,10 @@
 </script>
 
 <div
-	class="absolute rounded-md border bg-gray-200"
-	style="left:{currentLeft}px; top:{currentTop}px;"
+	class="absolute rounded-md border bg-gray-200 {hasFocus
+		? 'border-2 border-blue-500/50'
+		: 'border-2 border-gray-300/50'}"
+	style="left:{currentLeft}px; top:{currentTop}px; z-index:{z};"
 >
 	<div
 		role="button"
@@ -89,10 +109,15 @@
 			</ul>
 		{/if}
 	</div>
-	<article
+	<div
+		role="button"
+		tabindex="0"
 		class="h-min overflow-y-scroll overscroll-none"
 		style=" width:{width}px; max-height:{height}px;"
+		onmouseup={() => {
+			setFocus(id);
+		}}
 	>
 		{@render children?.()}
-	</article>
+	</div>
 </div>
