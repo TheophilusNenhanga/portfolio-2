@@ -79,6 +79,15 @@
 				<Badge>#UI Framework</Badge>
 			</div>
 		</div>
+		<div>
+			<h4>Jelp</h4>
+			<p>Whatever Jelp is about</p>
+			<div class="flex flex-wrap gap-1">
+				<Badge>TypeScript</Badge>
+				<Badge>Svelte</Badge>
+				<Badge>#Learning Platform</Badge>
+			</div>
+		</div>
 	</div>
 
 	<div class="h-px w-full bg-gray-300"></div>

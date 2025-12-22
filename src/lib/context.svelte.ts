@@ -23,11 +23,16 @@ export type WindowState = {
 	left: number;
 	top: number;
 	hasFocus: boolean;
+	lastLeft: number;
+	lastTop: number;
+	lastWidth: number;
+	lastHeight: number;
+	lastState: 'minimized' | 'maximized' | 'closed' | 'open';
 };
 
 export let windows: WindowState[] = $state([
 	{
-		zIndex: 0,
+		zIndex: 1,
 		openState: 'open',
 		name: 'Portfolio',
 		id: 0,
@@ -37,7 +42,12 @@ export let windows: WindowState[] = $state([
 		height: 600,
 		left: 20,
 		top: 100,
-		hasFocus: true
+		hasFocus: true,
+		lastLeft: 0,
+		lastTop: 0,
+		lastWidth: 0,
+		lastHeight: 0,
+		lastState: 'closed'
 	},
 	{
 		zIndex: 0,
@@ -48,9 +58,14 @@ export let windows: WindowState[] = $state([
 		component: Settings,
 		width: 400,
 		height: 600,
-		left: 20,
-		top: 100,
-		hasFocus: false
+		left: 560,
+		top: 270,
+		hasFocus: false,
+		lastLeft: 0,
+		lastTop: 0,
+		lastWidth: 0,
+		lastHeight: 0,
+		lastState: 'closed'
 	}
 ]);
 
@@ -64,4 +79,45 @@ export function setFocus(id: number) {
 			windows[i].zIndex = 0;
 		}
 	}
+}
+
+export function windowMinimize(id: number) {
+	windows[id].lastState = windows[id].openState;
+	windows[id].openState = 'minimized';
+}
+
+export function windowUnMinimize(id: number) {
+	windows[id].openState = windows[id].lastState;
+}
+
+export function windowMaximize(id: number, window: Window) {
+	windows[id].openState = 'maximized';
+	windows[id].lastLeft = windows[id].left;
+	windows[id].lastTop = windows[id].top;
+	windows[id].lastWidth = windows[id].width;
+	windows[id].lastHeight = windows[id].height;
+	windows[id].left = 0;
+	windows[id].top = 24;
+	windows[id].width = window.innerWidth;
+	windows[id].height = window.innerHeight - 56 - 24 - 24;
+}
+
+export function windowClose(id: number) {
+	windows[id].openState = 'closed';
+	windows[id].lastLeft = windows[id].left;
+	windows[id].lastTop = windows[id].top;
+	windows[id].lastWidth = windows[id].width;
+	windows[id].lastHeight = windows[id].height;
+	windows[id].left = 0;
+	windows[id].top = 0;
+	windows[id].width = 0;
+	windows[id].height = 0;
+}
+
+export function windowRestore(id: number) {
+	windows[id].openState = 'open';
+	windows[id].left = windows[id].lastLeft;
+	windows[id].top = windows[id].lastTop;
+	windows[id].width = windows[id].lastWidth;
+	windows[id].height = windows[id].lastHeight;
 }
