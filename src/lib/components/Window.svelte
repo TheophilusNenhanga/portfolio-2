@@ -17,7 +17,9 @@
 		windowMaximize,
 		windowMinimize,
 		windowRestore,
-		windowClose
+		windowClose,
+		windowMaximized,
+		startTop
 	} from '$lib/context.svelte';
 	import TitleBarDot from './TitleBarDot.svelte';
 
@@ -48,8 +50,25 @@
 			const deltaX = event.clientX - dragStartX;
 			const deltaY = event.clientY - dragStartY;
 
-			currentLeft = initialLeft + deltaX;
-			currentTop = initialTop + deltaY;
+			let newLeft = initialLeft + deltaX;
+			let newTop = initialTop + deltaY;
+
+			if (newLeft < 0) {
+				newLeft = 0;
+			}
+			if (newTop < (windowMaximized ? 0 : startTop)) {
+				newTop = windowMaximized ? 0 : startTop;
+			}
+
+			if (newLeft + thisWindow.width > window.innerWidth) {
+				newLeft = window.innerWidth - thisWindow.width;
+			}
+			if (newTop + thisWindow.height > window.innerHeight) {
+				newTop = window.innerHeight - thisWindow.height;
+			}
+
+			currentLeft = newLeft;
+			currentTop = newTop;
 		}
 
 		function onMouseUp() {

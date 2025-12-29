@@ -10,6 +10,9 @@ export const windowControlStyle = new PersistedState('windowControlStyle', 'wind
 export const windowControlPosition = new PersistedState('windowControlPosition', 'left');
 export const showTime = new PersistedState('showTime', 'true');
 export const showDate = new PersistedState('showDate', 'true');
+export let windowMaximized = false;
+export const startTop = 24;
+export const endTop = 56;
 
 export type WindowState = {
 	zIndex: number;
@@ -83,11 +86,25 @@ export function setFocus(id: number) {
 
 export function windowMinimize(id: number) {
 	windows[id].lastState = windows[id].openState;
+	windows[id].lastLeft = windows[id].left;
+	windows[id].lastTop = windows[id].top;
+	windows[id].lastWidth = windows[id].width;
+	windows[id].lastHeight = windows[id].height;
 	windows[id].openState = 'minimized';
+	windowMaximized = false;
 }
 
 export function windowUnMinimize(id: number) {
+	if (windows[id].lastState === 'maximized') {
+		windowMaximized = true;
+	} else {
+		windowMaximized = false;
+	}
 	windows[id].openState = windows[id].lastState;
+	windows[id].left = windows[id].lastLeft;
+	windows[id].top = windows[id].lastTop;
+	windows[id].width = windows[id].lastWidth;
+	windows[id].height = windows[id].lastHeight;
 }
 
 export function windowMaximize(id: number, window: Window) {
@@ -97,9 +114,10 @@ export function windowMaximize(id: number, window: Window) {
 	windows[id].lastWidth = windows[id].width;
 	windows[id].lastHeight = windows[id].height;
 	windows[id].left = 0;
-	windows[id].top = 24;
+	windows[id].top = startTop;
 	windows[id].width = window.innerWidth;
-	windows[id].height = window.innerHeight - 56 - 24 - 24;
+	windows[id].height = window.innerHeight - endTop - startTop - 24;
+	windowMaximized = true;
 }
 
 export function windowClose(id: number) {
@@ -112,6 +130,7 @@ export function windowClose(id: number) {
 	windows[id].top = 0;
 	windows[id].width = 0;
 	windows[id].height = 0;
+	windowMaximized = false;
 }
 
 export function windowRestore(id: number) {
@@ -120,4 +139,5 @@ export function windowRestore(id: number) {
 	windows[id].top = windows[id].lastTop;
 	windows[id].width = windows[id].lastWidth;
 	windows[id].height = windows[id].lastHeight;
+	windowMaximized = false;
 }
