@@ -13,6 +13,7 @@ export const showDate = new PersistedState('showDate', 'true');
 export let windowMaximized = false;
 export const startTop = 24;
 export const endTop = 56;
+export const topBarHeight = 24;
 
 export type WindowState = {
 	zIndex: number;

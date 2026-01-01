@@ -67,7 +67,7 @@
 	}
 </script>
 
-<div class="flex flex-col gap-4 px-2 py-1">
+<div class="flex flex-col gap-4 px-2 py-1 select-none">
 	<h2 class="text-xl font-bold">Settings</h2>
 
 	<h3>Windows</h3>

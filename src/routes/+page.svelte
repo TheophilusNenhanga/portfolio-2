@@ -21,7 +21,7 @@
 
 <main class="relative hidden h-screen max-h-screen overflow-x-clip lg:block">
 	{#if showDate.current == 'true' || showTime.current == 'true'}
-		<div class="flex h-6 w-full items-center justify-center bg-gray-300">
+		<div class="flex h-6 w-full items-center justify-center bg-gray-300 select-none">
 			<p class="rounded-full border px-4 text-center">
 				{#if showDate.current == 'true'}
 					{date}

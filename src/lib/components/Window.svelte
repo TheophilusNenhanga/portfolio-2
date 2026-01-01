@@ -18,8 +18,11 @@
 		windowMinimize,
 		windowRestore,
 		windowClose,
-		windowMaximized,
-		startTop
+		startTop,
+		showDate,
+		showTime,
+		endTop,
+		topBarHeight
 	} from '$lib/context.svelte';
 	import TitleBarDot from './TitleBarDot.svelte';
 
@@ -56,15 +59,21 @@
 			if (newLeft < 0) {
 				newLeft = 0;
 			}
-			if (newTop < (windowMaximized ? 0 : startTop)) {
-				newTop = windowMaximized ? 0 : startTop;
+
+			if (newTop < 0) {
+				newTop = 0;
+			}
+
+			if ((showDate.current == 'true' || showTime.current == 'true') && newTop < startTop) {
+				newTop = startTop;
 			}
 
 			if (newLeft + thisWindow.width > window.innerWidth) {
 				newLeft = window.innerWidth - thisWindow.width;
 			}
-			if (newTop + thisWindow.height > window.innerHeight) {
-				newTop = window.innerHeight - thisWindow.height;
+
+			if (newTop + thisWindow.height > window.innerHeight - endTop) {
+				newTop = window.innerHeight - thisWindow.height - endTop;
 			}
 
 			currentLeft = newLeft;
@@ -93,12 +102,12 @@
 	class="absolute rounded-md border bg-gray-200 {thisWindow.hasFocus
 		? 'border-2 border-blue-500/50'
 		: 'border-2 border-gray-300/50'}"
-	style="left:{currentLeft}px; top:{currentTop}px; z-index:{thisWindow.zIndex};"
+	style="width:{thisWindow.width}px; height:{thisWindow.height}px; left:{currentLeft}px; top:{currentTop}px; z-index:{thisWindow.zIndex};"
 >
 	<div
 		role="button"
 		tabindex="0"
-		class="flex h-6 w-full justify-between rounded-t-sm bg-gray-500 {windowControlPosition.current ===
+		class="flex h-6 w-full justify-between rounded-t-sm bg-gray-500 select-none {windowControlPosition.current ===
 			'left' && 'flex-row-reverse'}"
 		onmousedown={onDoubleClickTitleBar}
 	>
@@ -178,8 +187,8 @@
 	<div
 		role="button"
 		tabindex="0"
-		class="h-min overflow-y-scroll overscroll-none"
-		style="width:{thisWindow.width}px; height:{thisWindow.height}px;"
+		class="overflow-y-scroll overscroll-none rounded-b-md"
+		style="height:{thisWindow.height - topBarHeight}px;"
 		onmouseup={() => {
 			setFocus(id);
 		}}

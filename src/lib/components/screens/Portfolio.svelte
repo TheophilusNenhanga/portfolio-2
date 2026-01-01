@@ -2,7 +2,7 @@
 	import { Badge } from '$lib/components/ui/badge/index.js';
 </script>
 
-<div class="flex flex-col gap-4 rounded-b-md bg-gray-800 px-2 py-1 text-white">
+<div class="flex flex-col gap-4 bg-gray-800 px-2 py-1 text-white select-none">
 	<div id="name">
 		<h1 class="text-2xl font-bold">Theophilus Nenhanga</h1>
 		<h2 class="font-semibold">... Developer</h2>
