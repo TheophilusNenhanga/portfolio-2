@@ -42,8 +42,8 @@
 		dragging = true;
 		dragStartX = event.clientX;
 		dragStartY = event.clientY;
-		initialLeft = currentLeft;
-		initialTop = currentTop;
+		initialLeft = thisWindow.left;
+		initialTop = thisWindow.top;
 	}
 
 	$effect(() => {
@@ -76,8 +76,8 @@
 				newTop = window.innerHeight - thisWindow.height - endTop;
 			}
 
-			currentLeft = newLeft;
-			currentTop = newTop;
+			windows[id].left = newLeft;
+			windows[id].top = newTop;
 		}
 
 		function onMouseUp() {
