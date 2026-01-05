@@ -99,7 +99,7 @@
 </script>
 
 <div
-	class="absolute rounded-md border bg-gray-200 {thisWindow.hasFocus
+	class="absolute overflow-hidden rounded-md border bg-gray-200 {thisWindow.hasFocus
 		? 'border-2 border-blue-600/70'
 		: 'border-2 border-gray-400/50'}"
 	style="width:{thisWindow.width}px; height:{thisWindow.height}px; left:{currentLeft}px; top:{currentTop}px; z-index:{thisWindow.zIndex};"
@@ -107,7 +107,7 @@
 	<div
 		role="button"
 		tabindex="0"
-		class="flex h-6 w-full justify-between rounded-t-sm bg-gray-500 select-none {windowControlPosition.current ===
+		class="flex h-6 w-full justify-between bg-gray-500 select-none {windowControlPosition.current ===
 			'left' && 'flex-row-reverse'}"
 		onmousedown={onDoubleClickTitleBar}
 	>
@@ -206,7 +206,7 @@
 	<div
 		role="button"
 		tabindex="0"
-		class="overflow-y-scroll overscroll-none rounded-b-md"
+		class="overflow-y-auto overscroll-none"
 		style="height:{thisWindow.height - topBarHeight}px;"
 		onmouseup={() => {
 			setFocus(id);
