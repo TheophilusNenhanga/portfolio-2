@@ -6,7 +6,7 @@
 	<div id="name">
 		<h1 class="text-2xl font-bold">Theophilus Nenhanga</h1>
 		<h2 class="font-semibold">... Developer</h2>
-		<p class="">I build accessible experiences for the web.</p>
+		<p>I build accessible experiences for the web.</p>
 	</div>
 
 	<div id="links" class="flex items-center gap-4">

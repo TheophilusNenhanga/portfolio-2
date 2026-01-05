@@ -15,6 +15,12 @@ export const startTop = 24;
 export const endTop = 56;
 export const topBarHeight = 24;
 
+const baseWidth = 800;
+const baseHeight = 600;
+
+export const baseLeft = 100;
+export const baseTop = 100;
+
 export type WindowState = {
 	zIndex: number;
 	openState: 'minimized' | 'maximized' | 'closed' | 'open';
@@ -117,7 +123,7 @@ export function windowMaximize(id: number, window: Window) {
 	windows[id].left = 0;
 	windows[id].top = startTop;
 	windows[id].width = window.innerWidth;
-	windows[id].height = window.innerHeight - endTop - startTop - 24;
+	windows[id].height = window.innerHeight - endTop - startTop;
 	windowMaximized = true;
 }
 
@@ -132,6 +138,14 @@ export function windowClose(id: number) {
 	windows[id].width = 0;
 	windows[id].height = 0;
 	windowMaximized = false;
+}
+
+export function windowOpen(id: number) {
+	windows[id].openState = 'open';
+	windows[id].left = baseLeft;
+	windows[id].top = baseTop;
+	windows[id].width = baseWidth;
+	windows[id].height = baseHeight;
 }
 
 export function windowRestore(id: number) {
