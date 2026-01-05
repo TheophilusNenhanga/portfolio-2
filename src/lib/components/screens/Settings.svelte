@@ -8,28 +8,18 @@
 	} from '$lib/context.svelte';
 
 	const titlesContent = [
-		{ value: 'true', label: 'true' },
-		{ value: 'false', label: 'false' }
+		{ value: 'true', label: 'Show' },
+		{ value: 'false', label: 'Hide' }
 	];
 
 	const controlStyleContent = [
-		{ value: 'windows', label: 'Windows style' },
-		{ value: 'macos', label: 'MacOS Style' }
+		{ value: 'windows', label: 'Windows' },
+		{ value: 'macos', label: 'macOS' }
 	];
 
 	const controlPositionContent = [
 		{ value: 'left', label: 'Left' },
 		{ value: 'right', label: 'Right' }
-	];
-
-	const controlShowDateContent = [
-		{ value: 'true', label: 'true' },
-		{ value: 'false', label: 'false' }
-	];
-
-	const controlShowTimeContent = [
-		{ value: 'true', label: 'true' },
-		{ value: 'false', label: 'false' }
 	];
 
 	let titleValue = $state(showTitles.current);
@@ -38,97 +28,137 @@
 	let showTimeValue = $state(showTime.current);
 	let showDateValue = $state(showDate.current);
 
-	function updateWindowTitles() {
+	let hasChanges = $derived(
+		titleValue !== showTitles.current ||
+			controlStyleValue !== windowControlStyle.current ||
+			controlPositionValue !== windowControlPosition.current ||
+			showTimeValue !== showTime.current ||
+			showDateValue !== showDate.current
+	);
+
+	function updateSettings() {
 		showTitles.current = titleValue;
-	}
-
-	function updateControlStyle() {
 		windowControlStyle.current = controlStyleValue;
-	}
-
-	function updateControlPosition() {
 		windowControlPosition.current = controlPositionValue;
-	}
-
-	function updateShowTime() {
 		showTime.current = showTimeValue;
-	}
-
-	function updateShowDate() {
 		showDate.current = showDateValue;
 	}
 
-	function updateSettings() {
-		updateControlPosition();
-		updateControlStyle();
-		updateWindowTitles();
-		updateShowTime();
-		updateShowDate();
+	function resetSettings() {
+		titleValue = showTitles.current;
+		controlStyleValue = windowControlStyle.current;
+		controlPositionValue = windowControlPosition.current;
+		showTimeValue = showTime.current;
+		showDateValue = showDate.current;
 	}
 </script>
 
-<div class="flex flex-col gap-4 px-2 py-1 select-none">
-	<h2 class="text-xl font-bold">Settings</h2>
+<div class="flex h-full flex-col bg-white p-6 select-none">
+	<h2 class="mb-6 text-2xl font-semibold text-gray-800">Settings</h2>
 
-	<h3>Windows</h3>
+	<div class="flex-1 space-y-6 overflow-y-auto border-t pt-4 pr-2">
+		<section class="space-y-4">
+			<h3 class="border-b border-gray-200 pb-2 text-lg font-medium text-gray-700">
+				Window Appearance
+			</h3>
 
-	<div class="flex flex-col gap-2">
-		<label for="titleSelect"> Should window titles be visible </label>
-		<select name="titleSeclect" id="titleSelect" bind:value={titleValue}>
-			{#each titlesContent as content (content.value)}
-				<option value={content.value}>{content.label}</option>
-			{/each}
-		</select>
+			<div class="space-y-2">
+				<label for="titleSelect" class="block text-sm font-medium text-gray-600">
+					Window Titles
+				</label>
+				<select
+					id="titleSelect"
+					bind:value={titleValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each titlesContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div class="space-y-2">
+				<label for="controlStyleSelect" class="block text-sm font-medium text-gray-600">
+					Control Style
+				</label>
+				<select
+					id="controlStyleSelect"
+					bind:value={controlStyleValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each controlStyleContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div class="space-y-2">
+				<label for="controlPositionSelect" class="block text-sm font-medium text-gray-600">
+					Control Position
+				</label>
+				<select
+					id="controlPositionSelect"
+					bind:value={controlPositionValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each controlPositionContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+		</section>
+
+		<section class="space-y-4">
+			<h3 class="border-b border-gray-200 pb-2 text-lg font-medium text-gray-700">
+				Desktop Display
+			</h3>
+
+			<div class="space-y-2">
+				<label for="showTimeSelect" class="block text-sm font-medium text-gray-600">
+					Show Time
+				</label>
+				<select
+					id="showTimeSelect"
+					bind:value={showTimeValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each titlesContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div class="space-y-2">
+				<label for="showDateSelect" class="block text-sm font-medium text-gray-600">
+					Show Date
+				</label>
+				<select
+					id="showDateSelect"
+					bind:value={showDateValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each titlesContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+		</section>
 	</div>
-	<div class="flex flex-col gap-2">
-		<label for="controlStyleSelect"> What style of window controls should be used </label>
-		<select
-			class="cursor-pointer"
-			name="controlStyleSelect"
-			id="constrolStyleSelect"
-			bind:value={controlStyleValue}
+
+	<div class="mt-6 flex gap-3 border-t border-gray-200 pt-4">
+		<button
+			onclick={updateSettings}
+			disabled={!hasChanges}
+			class="flex-1 cursor-pointer rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
 		>
-			{#each controlStyleContent as content (content.value)}
-				<option value={content.value}>{content.label}</option>
-			{/each}
-		</select>
-	</div>
-	<div class="flex flex-col gap-2">
-		<label for="controlPositionSelect"> Where should window controls be positioned? </label>
-		<select
-			name="controlPositionSelect"
-			id="constrolPositionSelect"
-			bind:value={controlPositionValue}
+			Save Changes
+		</button>
+		<button
+			onclick={resetSettings}
+			disabled={!hasChanges}
+			class="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
 		>
-			{#each controlPositionContent as content (content.value)}
-				<option value={content.value}>{content.label}</option>
-			{/each}
-		</select>
+			Cancel
+		</button>
 	</div>
-
-	<div class="h-px w-full bg-gray-600"></div>
-
-	<h3>Desktop</h3>
-
-	<div class="flex flex-col gap-2">
-		<label for="">Show time</label>
-		<select name="showTimeSelect" id="showTimeSelect" bind:value={showTimeValue}>
-			{#each controlShowTimeContent as content (content.value)}
-				<option value={content.value}>{content.label}</option>
-			{/each}
-		</select>
-	</div>
-
-	<div class="flex flex-col gap-2">
-		<label for="">Show Date</label>
-		<select name="showDateSelect" id="showDateSelect" bind:value={showDateValue}>
-			{#each controlShowDateContent as content (content.value)}
-				<option value={content.value}>{content.label}</option>
-			{/each}
-		</select>
-	</div>
-
-	<button class=" w-fit rounded-sm border border-black px-2 py-1" onclick={updateSettings}
-		>Save Changes
-	</button>
 </div>

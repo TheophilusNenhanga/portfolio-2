@@ -11,8 +11,8 @@
 </script>
 
 {#if showDate.current == 'true' || showTime.current == 'true'}
-	<div class="flex h-6 w-full items-center justify-center bg-gray-300 select-none">
-		<p class="rounded-full border px-4 text-center">
+	<div class="fixed flex h-6 w-full items-center justify-center bg-gray-300 select-none">
+		<p class="px-4 text-center font-semibold">
 			{#if showDate.current == 'true'}
 				{date}
 			{/if}

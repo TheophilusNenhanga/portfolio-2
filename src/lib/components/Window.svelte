@@ -100,8 +100,8 @@
 
 <div
 	class="absolute rounded-md border bg-gray-200 {thisWindow.hasFocus
-		? 'border-2 border-blue-500/50'
-		: 'border-2 border-gray-300/50'}"
+		? 'border-2 border-blue-600/70'
+		: 'border-2 border-gray-400/50'}"
 	style="width:{thisWindow.width}px; height:{thisWindow.height}px; left:{currentLeft}px; top:{currentTop}px; z-index:{thisWindow.zIndex};"
 >
 	<div
@@ -178,9 +178,28 @@
 			</ul>
 		{:else}
 			<ul class="mx-2 flex gap-1 py-1">
-				<TitleBarDot color="red" />
-				<TitleBarDot color="amber" />
-				<TitleBarDot color="green" />
+				<TitleBarDot
+					color="red"
+					onclick={() => {
+						windowClose(id);
+					}}
+				/>
+				<TitleBarDot
+					color="amber"
+					onclick={() => {
+						windowMinimize(id);
+					}}
+				/>
+				<TitleBarDot
+					color="green"
+					onclick={() => {
+						if (windows[id].openState === 'maximized') {
+							windowRestore(id);
+						} else {
+							windowMaximize(id, window);
+						}
+					}}
+				/>
 			</ul>
 		{/if}
 	</div>

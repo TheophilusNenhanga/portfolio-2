@@ -2,30 +2,41 @@
 	import { Badge } from '$lib/components/ui/badge/index.js';
 </script>
 
-<div class="flex flex-col gap-4 bg-gray-800 px-2 py-1 text-white select-none">
-	<div id="name">
-		<h1 class="text-2xl font-bold">Theophilus Nenhanga</h1>
-		<h2 class="font-semibold">... Developer</h2>
-		<p>I build accessible experiences for the web.</p>
+<article
+	class="flex h-full flex-col space-y-10 overflow-y-auto bg-gray-800 p-6 text-white select-none md:space-y-12"
+>
+	<div class=" space-y-2">
+		<h1 class="text-2xl font-semibold text-white">Theophilus Nenhanga</h1>
+		<h2 class="text-lg font-medium text-gray-300">Full Stack Developer</h2>
+		<p class="text-sm text-gray-400">I build accessible experiences for the web.</p>
 	</div>
 
-	<div id="links" class="flex items-center gap-4">
-		<a class="flex" href="https://github.com/TheophilusNenhanga" aria-label="github icon">
+	<div class=" flex items-center gap-4">
+		<a
+			class="flex transition-colors hover:text-blue-400"
+			href="https://github.com/TheophilusNenhanga"
+			aria-label="github icon"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 16 16"
 				fill="currentColor"
 				class="h-6 w-6"
 				aria-hidden="true"
-				><path
-					d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
-				></path></svg
 			>
+				<path
+					d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+				></path>
+			</svg>
 		</a>
 		<a
-			class="flex"
+			class="flex transition-colors hover:text-blue-400"
 			href="https://www.linkedin.com/in/theophilus-nenhanga/"
 			aria-label="linkedin icon"
+			target="_blank"
+			rel="noopener noreferrer"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -33,68 +44,142 @@
 				fill="currentColor"
 				class="h-7 w-7"
 				aria-hidden="true"
-				><path
-					d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"
-				></path></svg
 			>
+				<path
+					d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"
+				></path>
+			</svg>
 		</a>
 	</div>
 
-	<div id="about"></div>
-
-	<div id="experience">
-		<h3 class="font-bold">Experience</h3>
-		<div>
-			<h4 class="font-bold">Intern Web Developer <span>@ <a href="https://zu.com">zu</a></span></h4>
-			<small class="text-gray-400">September 2024 - September 2025</small>
-			<p>Whatever I did at zu</p>
-			<div class="flex flex-wrap gap-1">
-				<Badge>PHP</Badge>
-				<Badge>Drupal</Badge>
-				<Badge>Symfony</Badge>
-				<Badge>Astro</Badge>
-				<Badge>Typescript</Badge>
+	<section class=" space-y-4">
+		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Experience</h3>
+		<div class="space-y-3">
+			<div>
+				<h4 class="text-base font-medium text-white">
+					Intern Web Developer
+					<span class="text-gray-400"
+						>@ <a
+							href="https://zu.com"
+							class="text-blue-400 hover:underline"
+							target="_blank"
+							rel="noopener noreferrer">zu</a
+						></span
+					>
+				</h4>
+				<p class="mb-2 text-xs text-gray-400">September 2024 - September 2025</p>
+				<p class="mb-3 text-sm text-gray-300">
+					Developed and maintained web applications using modern frameworks and tools, contributing
+					to client projects and internal systems.
+				</p>
+				<div class="flex flex-wrap gap-2">
+					<Badge>PHP</Badge>
+					<Badge>Drupal</Badge>
+					<Badge>Symfony</Badge>
+					<Badge>Astro</Badge>
+					<Badge>Typescript</Badge>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
-	<div class="h-px w-full bg-gray-300"></div>
+	<section class="space-y-4">
+		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Projects</h3>
+		<div class="space-y-4">
+			<div>
+				<h4 class="mb-1 text-base font-medium text-white">Crux Lang</h4>
+				<p class="mb-3 text-sm text-gray-300">
+					A custom programming language implementation built from scratch, featuring lexical
+					analysis, parsing, and code generation.
+				</p>
+				<div class="flex flex-wrap gap-2">
+					<Badge>C</Badge>
+					<Badge variant="outline" class="border-gray-600 text-gray-400">Programming Language</Badge
+					>
+				</div>
+			</div>
 
-	<div id="projects" class="flex flex-col gap-4">
-		<h3 class="font-bold">Projects</h3>
-		<div>
-			<h4>Crux Lang</h4>
-			<p>Whatever Crux Lang is about</p>
-			<div class="flex flex-wrap gap-1">
-				<Badge>C</Badge>
-				<Badge>#Programming Language</Badge>
+			<div>
+				<h4 class="mb-1 text-base font-medium text-white">Flora Engine</h4>
+				<p class="mb-3 text-sm text-gray-300">
+					A lightweight UI framework built on SDL3, providing a foundation for creating
+					cross-platform graphical applications.
+				</p>
+				<div class="flex flex-wrap gap-2">
+					<Badge>C</Badge>
+					<Badge>SDL3</Badge>
+					<Badge variant="outline" class="border-gray-600 text-gray-400">UI Framework</Badge>
+				</div>
+			</div>
+
+			<div>
+				<h4 class="mb-1 text-base font-medium text-white">Jelp</h4>
+				<p class="mb-3 text-sm text-gray-300">
+					An interactive learning platform designed to make education more engaging through modern
+					web technologies.
+				</p>
+				<div class="flex flex-wrap gap-2">
+					<Badge>TypeScript</Badge>
+					<Badge>Svelte</Badge>
+					<Badge variant="outline" class="border-gray-600 text-gray-400">Learning Platform</Badge>
+				</div>
 			</div>
 		</div>
-		<div>
-			<h4>Flora Engine</h4>
-			<p>Whatever Flora Engine is about</p>
-			<div class="flex flex-wrap gap-1">
-				<Badge>C</Badge>
-				<Badge>SDL3</Badge>
-				<Badge>#UI Framework</Badge>
-			</div>
-		</div>
-		<div>
-			<h4>Jelp</h4>
-			<p>Whatever Jelp is about</p>
-			<div class="flex flex-wrap gap-1">
-				<Badge>TypeScript</Badge>
-				<Badge>Svelte</Badge>
-				<Badge>#Learning Platform</Badge>
-			</div>
-		</div>
-	</div>
+	</section>
 
-	<div class="h-px w-full bg-gray-300"></div>
+	<!-- <section class="space-y-4">
+		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Interests</h3>
+		<div class="space-y-2 text-sm text-gray-300">
+			<p>📚 Learning Japanese</p>
+			<p>📖 Reading</p>
+		</div>
+	</section> -->
 
-	<div id="other">
-		<h3 class="font-bold">Other</h3>
-		<p>learning japanese</p>
-		<p>reading</p>
-	</div>
-</div>
+	<section class="space-y-4">
+		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Bye Bye</h3>
+		<p class="inline-flex flex-wrap items-center text-sm">
+			This website was built with &nbsp;<a
+				href="https://svelte.dev/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex items-center justify-center text-blue-400 hover:underline"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 107 128"
+					><title>svelte-logo</title><path
+						d="M94.157 22.819c-10.4-14.885-30.94-19.297-45.792-9.835L22.282 29.608A29.92 29.92 0 0 0 8.764 49.65a31.5 31.5 0 0 0 3.108 20.231 30 30 0 0 0-4.477 11.183 31.9 31.9 0 0 0 5.448 24.116c10.402 14.887 30.942 19.297 45.791 9.835l26.083-16.624A29.92 29.92 0 0 0 98.235 78.35a31.53 31.53 0 0 0-3.105-20.232 30 30 0 0 0 4.474-11.182 31.88 31.88 0 0 0-5.447-24.116"
+						style="fill:#ff3e00"
+					/><path
+						d="M45.817 106.582a20.72 20.72 0 0 1-22.237-8.243 19.17 19.17 0 0 1-3.277-14.503 18 18 0 0 1 .624-2.435l.49-1.498 1.337.981a33.6 33.6 0 0 0 10.203 5.098l.97.294-.09.968a5.85 5.85 0 0 0 1.052 3.878 6.24 6.24 0 0 0 6.695 2.485 5.8 5.8 0 0 0 1.603-.704L69.27 76.28a5.43 5.43 0 0 0 2.45-3.631 5.8 5.8 0 0 0-.987-4.371 6.24 6.24 0 0 0-6.698-2.487 5.7 5.7 0 0 0-1.6.704l-9.953 6.345a19 19 0 0 1-5.296 2.326 20.72 20.72 0 0 1-22.237-8.243 19.17 19.17 0 0 1-3.277-14.502 17.99 17.99 0 0 1 8.13-12.052l26.081-16.623a19 19 0 0 1 5.3-2.329 20.72 20.72 0 0 1 22.237 8.243 19.17 19.17 0 0 1 3.277 14.503 18 18 0 0 1-.624 2.435l-.49 1.498-1.337-.98a33.6 33.6 0 0 0-10.203-5.1l-.97-.294.09-.968a5.86 5.86 0 0 0-1.052-3.878 6.24 6.24 0 0 0-6.696-2.485 5.8 5.8 0 0 0-1.602.704L37.73 51.72a5.42 5.42 0 0 0-2.449 3.63 5.79 5.79 0 0 0 .986 4.372 6.24 6.24 0 0 0 6.698 2.486 5.8 5.8 0 0 0 1.602-.704l9.952-6.342a19 19 0 0 1 5.295-2.328 20.72 20.72 0 0 1 22.237 8.242 19.17 19.17 0 0 1 3.277 14.503 18 18 0 0 1-8.13 12.053l-26.081 16.622a19 19 0 0 1-5.3 2.328"
+						style="fill:#fff"
+					/></svg
+				>
+				&nbsp;Svelte</a
+			>
+			, and deployed on &nbsp;
+			<a
+				href="https://vercel.com/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="flex items-center justify-center text-blue-400 hover:underline"
+				><svg
+					data-testid="geist-icon"
+					height="16"
+					stroke-linejoin="round"
+					style="color:white"
+					viewBox="0 0 16 16"
+					width="16"
+					><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1L16 15H0L8 1Z" fill="currentColor"
+					></path></svg
+				>&nbsp;Vercel</a
+			>.
+		</p>
+		<p class="text-sm">
+			The repository can be found <a
+				href="https://github.com/TheophilusNenhanga/portfolio-2"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-blue-400 hover:underline">here</a
+			>
+		</p>
+	</section>
+</article>

@@ -3,22 +3,55 @@
 	import Taskbar from '$lib/components/Taskbar.svelte';
 	import Topbar from '$lib/components/Topbar.svelte';
 	import Window from '$lib/components/Window.svelte';
-	import { windows } from '$lib/context.svelte';
+	import DesktopIcon from '$lib/components/DesktopIcon.svelte';
+	import Wall1 from '$lib/assets/wall1.webp';
+	import { windows, windowOpen, setFocus } from '$lib/context.svelte';
+
+	function handleIconDoubleClick(id: number) {
+		if (windows[id].openState === 'closed') {
+			windowOpen(id);
+		}
+		setFocus(id);
+	}
 </script>
 
-<main class="relative hidden h-screen max-h-screen overflow-x-clip lg:block">
+<main class="relative hidden h-screen max-h-screen overflow-hidden lg:block">
+	<div class="absolute inset-0 bg-blue-400 blur-xs" style="z-index: 0;">
+		<img
+			src={Wall1}
+			alt="Desktop Wallpaper"
+			class="pointer-events-none h-full w-full object-cover"
+		/>
+	</div>
+
 	<Topbar />
-	{#each windows as window (window.id)}
-		{#if window.openState === 'open' || window.openState === 'maximized'}
-			<Window id={window.id}>
-				{#if window.component}
-					<window.component />
-				{/if}
-			</Window>
-		{/if}
-	{/each}
+
+	<div
+		class="absolute right-0 bottom-14 left-0 grid auto-cols-[100px] grid-rows-[repeat(auto-fill,100px)] gap-2 p-4"
+		style="top: 24px; z-index: 1;"
+	>
+		{#each windows as w (w.id)}
+			<DesktopIcon icon={w.icon} name={w.name} onDoubleClick={() => handleIconDoubleClick(w.id)} />
+		{/each}
+	</div>
+
+	<div class="absolute inset-0" style="z-index: 10; pointer-events: none;">
+		{#each windows as w (w.id)}
+			{#if w.openState === 'open' || w.openState === 'maximized'}
+				<div style="pointer-events: auto;">
+					<Window id={w.id}>
+						{#if w.component}
+							<w.component />
+						{/if}
+					</Window>
+				</div>
+			{/if}
+		{/each}
+	</div>
+
 	<Taskbar />
 </main>
+
 <main class="lg:hidden">
 	<Portfolio />
 </main>
