@@ -5,10 +5,13 @@
 <article
 	class="flex h-full flex-col space-y-10 overflow-y-auto bg-gray-800 p-6 text-white select-none md:space-y-12"
 >
-	<div class=" space-y-2">
+	<div class="space-y-2">
 		<h1 class="text-2xl font-semibold text-white">Theophilus Nenhanga</h1>
 		<h2 class="text-lg font-medium text-gray-300">Full Stack Developer</h2>
-		<p class="text-sm text-gray-400">I build accessible experiences for the web.</p>
+		<p class="text-sm text-gray-400">
+			I build with performance in mind to be kind to the machine, and with accessibility in mind to
+			be kind to humans.
+		</p>
 	</div>
 
 	<div class=" flex items-center gap-4">
@@ -54,7 +57,7 @@
 
 	<section class=" space-y-4">
 		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Experience</h3>
-		<div class="space-y-3">
+		<div class="space-y-4">
 			<div>
 				<h4 class="text-base font-medium text-white">
 					Intern Web Developer
@@ -69,9 +72,19 @@
 				</h4>
 				<p class="mb-2 text-xs text-gray-400">September 2024 - September 2025</p>
 				<p class="mb-3 text-sm text-gray-300">
-					Developed and maintained web applications using modern frameworks and tools, contributing
-					to client projects and internal systems.
+					I contributed to feature development, bug fixes, and improvements for internal tools and
+					client-facing websites.
 				</p>
+				<p class="mb-3 text-sm text-gray-300">
+					I also supported engineering initiatives, including:
+				</p>
+				<ul class="mb-3 list-inside list-disc text-sm text-gray-300">
+					<li>Defining security standards for Drupal authentication</li>
+					<li>Assisting with accessibility improvements to meet WCAG 2.1 AA standards</li>
+					<li>Building internal monitoring dashboards</li>
+					<li>Investigating emerging technologies (e.g. Drupal AI)</li>
+				</ul>
+
 				<div class="flex flex-wrap gap-2">
 					<Badge>PHP</Badge>
 					<Badge>Drupal</Badge>
@@ -83,15 +96,40 @@
 		</div>
 	</section>
 
-	<section class="space-y-4">
+	<section class="space-y-6">
 		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Projects</h3>
-		<div class="space-y-4">
+		<div class="space-y-6">
 			<div>
-				<h4 class="mb-1 text-base font-medium text-white">Crux Lang</h4>
+				<h4
+					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+				>
+					<a href="https://github.com/TheophilusNenhanga/crux-lang">Crux Lang</a>
+				</h4>
 				<p class="mb-3 text-sm text-gray-300">
-					A custom programming language implementation built from scratch, featuring lexical
-					analysis, parsing, and code generation.
+					A custom programming language implementation based on Lox from <a
+						href="https://craftinginterpreters.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-blue-400 hover:underline">Crafting Interpreters</a
+					>. This project has strengthened my understanding of programming language design and
+					implementation as well as key factors of performance and optimization.
 				</p>
+				<p class="mb-3 text-sm text-gray-300">Some features of the language include:</p>
+				<ul class="mb-3 list-inside list-disc text-sm text-gray-300">
+					<li>Object Oriented Programming with the use of structs and struct composition.</li>
+					<li>
+						Module system with <code>pub</code> keyword for public identifiers that other modules
+						can <code>use</code>.
+					</li>
+					<li>
+						<code>Result[T, E]</code> type for error handling, and <code>match</code> expressions for
+						pattern matching.
+					</li>
+					<li>
+						Mark and sweep garbage collector with object pooling as a runtime performance
+						optimization.
+					</li>
+				</ul>
 				<div class="flex flex-wrap gap-2">
 					<Badge>C</Badge>
 					<Badge variant="outline" class="border-gray-600 text-gray-400">Programming Language</Badge
@@ -100,10 +138,14 @@
 			</div>
 
 			<div>
-				<h4 class="mb-1 text-base font-medium text-white">Flora Engine</h4>
+				<h4
+					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+				>
+					<a href="https://github.com/TheophilusNenhanga/flora-engine">Flora Engine</a>
+				</h4>
 				<p class="mb-3 text-sm text-gray-300">
-					A lightweight UI framework built on SDL3, providing a foundation for creating
-					cross-platform graphical applications.
+					A lightweight UI framework built on SDL3, providing a foundation for creating Graphical
+					User Interfaces.
 				</p>
 				<div class="flex flex-wrap gap-2">
 					<Badge>C</Badge>
@@ -113,10 +155,13 @@
 			</div>
 
 			<div>
-				<h4 class="mb-1 text-base font-medium text-white">Jelp</h4>
+				<h4
+					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+				>
+					<a href="https://github.com/TheophilusNenhanga/jelp">Jelp</a>
+				</h4>
 				<p class="mb-3 text-sm text-gray-300">
-					An interactive learning platform designed to make education more engaging through modern
-					web technologies.
+					An interactive learning platform designed to make learning Japanese easy.
 				</p>
 				<div class="flex flex-wrap gap-2">
 					<Badge>TypeScript</Badge>
@@ -126,14 +171,6 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- <section class="space-y-4">
-		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Interests</h3>
-		<div class="space-y-2 text-sm text-gray-300">
-			<p>📚 Learning Japanese</p>
-			<p>📖 Reading</p>
-		</div>
-	</section> -->
 
 	<section class="space-y-4">
 		<h3 class="border-b border-gray-600 pb-2 text-lg font-medium text-white">Bye Bye</h3>

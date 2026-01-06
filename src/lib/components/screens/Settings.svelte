@@ -4,7 +4,13 @@
 		windowControlPosition,
 		windowControlStyle,
 		showTime,
-		showDate
+		showDate,
+		activeWindowBorderColor,
+		activeWindowBorderWidth,
+		inactiveWindowBorderColor,
+		inactiveWindowBorderWidth,
+		titleBarColor,
+		titleBarTextColor
 	} from '$lib/context.svelte';
 
 	const titlesContent = [
@@ -22,18 +28,37 @@
 		{ value: 'right', label: 'Right' }
 	];
 
+	const borderWidthContent = [
+		{ value: '1px', label: '1px' },
+		{ value: '2px', label: '2px' },
+		{ value: '3px', label: '3px' },
+		{ value: '4px', label: '4px' }
+	];
+
 	let titleValue = $state(showTitles.current);
 	let controlStyleValue = $state(windowControlStyle.current);
 	let controlPositionValue = $state(windowControlPosition.current);
 	let showTimeValue = $state(showTime.current);
 	let showDateValue = $state(showDate.current);
+	let activeWindowBorderColorValue = $state(activeWindowBorderColor.current);
+	let activeWindowBorderWidthValue = $state(activeWindowBorderWidth.current);
+	let inactiveWindowBorderColorValue = $state(inactiveWindowBorderColor.current);
+	let inactiveWindowBorderWidthValue = $state(inactiveWindowBorderWidth.current);
+	let titleBarColorValue = $state(titleBarColor.current);
+	let titleBarTextColorValue = $state(titleBarTextColor.current);
 
 	let hasChanges = $derived(
 		titleValue !== showTitles.current ||
 			controlStyleValue !== windowControlStyle.current ||
 			controlPositionValue !== windowControlPosition.current ||
 			showTimeValue !== showTime.current ||
-			showDateValue !== showDate.current
+			showDateValue !== showDate.current ||
+			activeWindowBorderColorValue !== activeWindowBorderColor.current ||
+			activeWindowBorderWidthValue !== activeWindowBorderWidth.current ||
+			inactiveWindowBorderColorValue !== inactiveWindowBorderColor.current ||
+			inactiveWindowBorderWidthValue !== inactiveWindowBorderWidth.current ||
+			titleBarColorValue !== titleBarColor.current ||
+			titleBarTextColorValue !== titleBarTextColor.current
 	);
 
 	function updateSettings() {
@@ -42,6 +67,12 @@
 		windowControlPosition.current = controlPositionValue;
 		showTime.current = showTimeValue;
 		showDate.current = showDateValue;
+		activeWindowBorderColor.current = activeWindowBorderColorValue;
+		activeWindowBorderWidth.current = activeWindowBorderWidthValue;
+		inactiveWindowBorderColor.current = inactiveWindowBorderColorValue;
+		inactiveWindowBorderWidth.current = inactiveWindowBorderWidthValue;
+		titleBarColor.current = titleBarColorValue;
+		titleBarTextColor.current = titleBarTextColorValue;
 	}
 
 	function resetSettings() {
@@ -50,10 +81,16 @@
 		controlPositionValue = windowControlPosition.current;
 		showTimeValue = showTime.current;
 		showDateValue = showDate.current;
+		activeWindowBorderColorValue = activeWindowBorderColor.current;
+		activeWindowBorderWidthValue = activeWindowBorderWidth.current;
+		inactiveWindowBorderColorValue = inactiveWindowBorderColor.current;
+		inactiveWindowBorderWidthValue = inactiveWindowBorderWidth.current;
+		titleBarColorValue = titleBarColor.current;
+		titleBarTextColorValue = titleBarTextColor.current;
 	}
 </script>
 
-<div class="flex h-full flex-col bg-white p-6 select-none">
+<div class="flex h-full flex-col bg-gray-100 p-6 select-none">
 	<h2 class="mb-6 text-2xl font-semibold text-gray-800">Settings</h2>
 
 	<div class="flex-1 space-y-6 overflow-y-auto border-t pt-4 pr-2">
@@ -110,6 +147,122 @@
 
 		<section class="space-y-4">
 			<h3 class="border-b border-gray-200 pb-2 text-lg font-medium text-gray-700">
+				Window Borders
+			</h3>
+
+			<div class="space-y-2">
+				<label for="activeWindowBorderColor" class="block text-sm font-medium text-gray-600">
+					Active Window Border Color
+				</label>
+				<div class="flex gap-2">
+					<input
+						id="activeWindowBorderColor"
+						type="color"
+						bind:value={activeWindowBorderColorValue}
+						class="h-10 w-16 cursor-pointer rounded-md border border-gray-300"
+					/>
+					<input
+						type="text"
+						bind:value={activeWindowBorderColorValue}
+						class="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+					/>
+				</div>
+			</div>
+
+			<div class="space-y-2">
+				<label for="activeWindowBorderWidth" class="block text-sm font-medium text-gray-600">
+					Active Window Border Width
+				</label>
+				<select
+					id="activeWindowBorderWidth"
+					bind:value={activeWindowBorderWidthValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each borderWidthContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+
+			<div class="space-y-2">
+				<label for="inactiveWindowBorderColor" class="block text-sm font-medium text-gray-600">
+					Inactive Window Border Color
+				</label>
+				<div class="flex gap-2">
+					<input
+						id="inactiveWindowBorderColor"
+						type="color"
+						bind:value={inactiveWindowBorderColorValue}
+						class="h-10 w-16 cursor-pointer rounded-md border border-gray-300"
+					/>
+					<input
+						type="text"
+						bind:value={inactiveWindowBorderColorValue}
+						class="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+					/>
+				</div>
+			</div>
+
+			<div class="space-y-2">
+				<label for="inactiveWindowBorderWidth" class="block text-sm font-medium text-gray-600">
+					Inactive Window Border Width
+				</label>
+				<select
+					id="inactiveWindowBorderWidth"
+					bind:value={inactiveWindowBorderWidthValue}
+					class="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+				>
+					{#each borderWidthContent as content (content.value)}
+						<option value={content.value}>{content.label}</option>
+					{/each}
+				</select>
+			</div>
+		</section>
+
+		<section class="space-y-4">
+			<h3 class="border-b border-gray-200 pb-2 text-lg font-medium text-gray-700">Title Bar</h3>
+
+			<div class="space-y-2">
+				<label for="titleBarColor" class="block text-sm font-medium text-gray-600">
+					Title Bar Color
+				</label>
+				<div class="flex gap-2">
+					<input
+						id="titleBarColor"
+						type="color"
+						bind:value={titleBarColorValue}
+						class="h-10 w-16 cursor-pointer rounded-md border border-gray-300"
+					/>
+					<input
+						type="text"
+						bind:value={titleBarColorValue}
+						class="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+					/>
+				</div>
+			</div>
+
+			<div class="space-y-2">
+				<label for="titleBarTextColor" class="block text-sm font-medium text-gray-600">
+					Title Bar Text Color
+				</label>
+				<div class="flex gap-2">
+					<input
+						id="titleBarTextColor"
+						type="color"
+						bind:value={titleBarTextColorValue}
+						class="h-10 w-16 cursor-pointer rounded-md border border-gray-300"
+					/>
+					<input
+						type="text"
+						bind:value={titleBarTextColorValue}
+						class="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+					/>
+				</div>
+			</div>
+		</section>
+
+		<section class="space-y-4">
+			<h3 class="border-b border-gray-200 pb-2 text-lg font-medium text-gray-700">
 				Desktop Display
 			</h3>
 
@@ -145,6 +298,7 @@
 		</section>
 	</div>
 
+	<!-- Action Buttons -->
 	<div class="mt-6 flex gap-3 border-t border-gray-200 pt-4">
 		<button
 			onclick={updateSettings}

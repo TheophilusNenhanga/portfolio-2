@@ -4,8 +4,9 @@
 	import Topbar from '$lib/components/Topbar.svelte';
 	import Window from '$lib/components/Window.svelte';
 	import DesktopIcon from '$lib/components/DesktopIcon.svelte';
-	import Wall1 from '$lib/assets/wall1.webp';
+	import Wall1 from '$lib/assets/wall2.webp';
 	import { windows, windowOpen, setFocus } from '$lib/context.svelte';
+	import { fly } from 'svelte/transition';
 
 	function handleIconDoubleClick(id: number) {
 		if (windows[id].openState === 'closed') {
@@ -23,9 +24,7 @@
 			class="pointer-events-none h-full w-full object-cover"
 		/>
 	</div>
-
 	<Topbar />
-
 	<div
 		class="absolute right-0 bottom-14 left-0 grid auto-cols-[100px] grid-rows-[repeat(auto-fill,100px)] gap-2 p-4"
 		style="top: 24px; z-index: 1;"
@@ -38,7 +37,11 @@
 	<div class="absolute inset-0" style="z-index: 10; pointer-events: none;">
 		{#each windows as w (w.id)}
 			{#if w.openState === 'open' || w.openState === 'maximized'}
-				<div style="pointer-events: auto;">
+				<div
+					style="pointer-events: auto;"
+					in:fly={{ duration: 350, x: -window.innerWidth / 2, y: window.innerHeight }}
+					out:fly={{ duration: 500, x: -window.innerWidth / 2, y: window.innerHeight }}
+				>
 					<Window id={w.id}>
 						{#if w.component}
 							<w.component />

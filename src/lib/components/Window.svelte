@@ -22,21 +22,32 @@
 		showDate,
 		showTime,
 		endTop,
-		topBarHeight
+		topBarHeight,
+		minWidth,
+		minHeight,
+		activeWindowBorderWidth,
+		activeWindowBorderColor,
+		inactiveWindowBorderWidth,
+		inactiveWindowBorderColor,
+		titleBarColor,
+		titleBarTextColor
 	} from '$lib/context.svelte';
 	import TitleBarDot from './TitleBarDot.svelte';
 
 	let thisWindow = $derived(windows[id]);
 
 	let dragging = $state(false);
+	let resizing = $state(false);
 	let currentLeft = $derived(thisWindow.left);
 	let currentTop = $derived(thisWindow.top);
 	let dragStartX = $state(0);
 	let dragStartY = $state(0);
 	let initialLeft = $state(0);
 	let initialTop = $state(0);
+	let initialWidth = $state(0);
+	let initialHeight = $state(0);
 
-	function onDoubleClickTitleBar(event: MouseEvent) {
+	function onMouseDownTitleBar(event: MouseEvent) {
 		if (event.button !== 0) return;
 		setFocus(id);
 		dragging = true;
@@ -46,8 +57,18 @@
 		initialTop = thisWindow.top;
 	}
 
+	function onMouseDownResize(event: MouseEvent) {
+		if (event.button !== 0) return;
+		setFocus(id);
+		resizing = true;
+		dragStartX = event.clientX;
+		dragStartY = event.clientY;
+		initialWidth = thisWindow.width;
+		initialHeight = thisWindow.height;
+	}
+
 	$effect(() => {
-		function onMouseMove(event: MouseEvent) {
+		function onMouseMoveDragging(event: MouseEvent) {
 			if (!dragging) return;
 
 			const deltaX = event.clientX - dragStartX;
@@ -80,44 +101,121 @@
 			windows[id].top = newTop;
 		}
 
-		function onMouseUp() {
+		function onMouseMoveResizing(event: MouseEvent) {
+			if (!resizing) return;
+
+			const deltaX = event.clientX - dragStartX;
+			const deltaY = event.clientY - dragStartY;
+
+			let newWidth = initialWidth + deltaX;
+			let newHeight = initialHeight + deltaY;
+
+			if (newWidth < minWidth) {
+				newWidth = minWidth;
+			}
+
+			if (newHeight < minHeight) {
+				newHeight = minHeight;
+			}
+
+			if (newWidth + thisWindow.left > window.innerWidth) {
+				newWidth = window.innerWidth - thisWindow.left;
+			}
+
+			if (newHeight + thisWindow.top > window.innerHeight - endTop) {
+				newHeight = window.innerHeight - thisWindow.top - endTop;
+			}
+
+			windows[id].width = newWidth;
+			windows[id].height = newHeight;
+		}
+
+		function onMouseUpDragging() {
 			if (dragging) {
 				dragging = false;
 			}
 		}
 
+		function onMouseUpResizing() {
+			if (resizing) {
+				resizing = false;
+			}
+		}
+
 		if (dragging) {
-			document.addEventListener('mousemove', onMouseMove);
-			document.addEventListener('mouseup', onMouseUp);
+			document.addEventListener('mousemove', onMouseMoveDragging);
+			document.addEventListener('mouseup', onMouseUpDragging);
 
 			return () => {
-				document.removeEventListener('mousemove', onMouseMove);
-				document.removeEventListener('mouseup', onMouseUp);
+				document.removeEventListener('mousemove', onMouseMoveDragging);
+				document.removeEventListener('mouseup', onMouseUpDragging);
+			};
+		}
+
+		if (resizing) {
+			document.addEventListener('mousemove', onMouseMoveResizing);
+			document.addEventListener('mouseup', onMouseUpResizing);
+
+			return () => {
+				document.removeEventListener('mousemove', onMouseMoveResizing);
+				document.removeEventListener('mouseup', onMouseUpResizing);
 			};
 		}
 	});
 </script>
 
 <div
-	class="absolute overflow-hidden rounded-md border bg-gray-200 {thisWindow.hasFocus
-		? 'border-2 border-blue-600/70'
-		: 'border-2 border-gray-400/50'}"
-	style="width:{thisWindow.width}px; height:{thisWindow.height}px; left:{currentLeft}px; top:{currentTop}px; z-index:{thisWindow.zIndex};"
+	class="absolute overflow-hidden rounded-md bg-gray-200"
+	style="
+	width:{thisWindow.width}px;
+	height:{thisWindow.height}px;
+	left:{currentLeft}px;
+	top:{currentTop}px;
+	border-width:{thisWindow.hasFocus
+		? activeWindowBorderWidth.current
+		: inactiveWindowBorderWidth.current};
+	border-color:{thisWindow.hasFocus
+		? activeWindowBorderColor.current
+		: inactiveWindowBorderColor.current};
+	z-index:{thisWindow.zIndex};"
 >
+	<button
+		class="absolute right-0 bottom-0 cursor-nw-resize"
+		aria-label="{thisWindow.name} window resize"
+		onmousedown={onMouseDownResize}
+	>
+		<svg
+			class="text-white mix-blend-difference"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				d="M19 11V16C19 17.6569 17.6569 19 16 19H11"
+				stroke="currentColor"
+				stroke-width="3"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
+	</button>
 	<div
 		role="button"
 		tabindex="0"
-		class="flex h-6 w-full justify-between bg-gray-500 select-none {windowControlPosition.current ===
-			'left' && 'flex-row-reverse'}"
-		onmousedown={onDoubleClickTitleBar}
+		style="background-color: {titleBarColor.current}; color: {titleBarTextColor.current}"
+		class="flex h-6 w-full justify-between select-none {windowControlPosition.current === 'left' &&
+			'flex-row-reverse'}"
+		onmousedown={onMouseDownTitleBar}
 	>
 		<div class="flex items-center justify-center select-none">
 			{#if showTitles.current == 'true'}
-				<small class="px-2 text-white">{thisWindow.name}</small>
+				<small class="px-2">{thisWindow.name}</small>
 			{/if}
 		</div>
 		{#if windowControlStyle.current == 'windows'}
-			<ul class="flex text-white last:rounded-tr-sm">
+			<ul class="flex last:rounded-tr-sm">
 				<TitleBarButton
 					onclick={() => {
 						windowMinimize(id);

@@ -1,38 +1,15 @@
-# sv
+# Portfolio-2
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is my portfolio, built with SvelteKit. 
 
-## Creating a project
+## Design
 
-If you're seeing this, you've probably already done this step. Congrats!
+The design of the portfolio is a desktop windows based operating system. The windows can be opened, closed, resized and moved around the screen. There is also a taskbar at the bottom of the screen, which allows the user to switch between windows and access settings. The settings allow for changing the window style and other preferences.
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Development
 
-# create a new project in my-app
-npx sv create my-app
-```
+After cloning the repository, you can install the dependencies with `npm install` or `yarn install`. Then, you can run the development server with `npm run dev` or `yarn dev`. 
 
-## Developing
+## Bye Bye
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Thank you for visiting my portfolio!

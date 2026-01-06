@@ -15,7 +15,7 @@
 </script>
 
 <button
-	class="flex cursor-pointer flex-col items-center justify-center rounded transition-colors hover:bg-white/20"
+	class="flex cursor-pointer flex-col items-center justify-center rounded-md transition-colors hover:bg-white/30"
 	ondblclick={handleDblClick}
 >
 	<img src={icon} alt="{name} icon" class="max-h-full max-w-full scale-125" />

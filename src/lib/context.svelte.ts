@@ -7,7 +7,13 @@ import SettingsIcon from './assets/settings.svg';
 
 export const showTitles = new PersistedState('showTitles', 'true');
 export const windowControlStyle = new PersistedState('windowControlStyle', 'windows');
-export const windowControlPosition = new PersistedState('windowControlPosition', 'left');
+export const windowControlPosition = new PersistedState('windowControlPosition', 'right');
+export const activeWindowBorderColor = new PersistedState('activeWindowBorderColor', '#0078d4');
+export const activeWindowBorderWidth = new PersistedState('activeWindowBorderWidth', '2px');
+export const inactiveWindowBorderColor = new PersistedState('inactiveWindowBorderColor', '#ccc');
+export const inactiveWindowBorderWidth = new PersistedState('inactiveWindowBorderWidth', '2px');
+export const titleBarColor = new PersistedState('titleBarColor', '#6a7282');
+export const titleBarTextColor = new PersistedState('titleBarTextColor', '#fff');
 export const showTime = new PersistedState('showTime', 'true');
 export const showDate = new PersistedState('showDate', 'true');
 export let windowMaximized = false;
@@ -20,6 +26,9 @@ const baseHeight = 600;
 
 export const baseLeft = 100;
 export const baseTop = 100;
+
+export const minWidth = 200;
+export const minHeight = 100;
 
 export type WindowState = {
 	zIndex: number;
