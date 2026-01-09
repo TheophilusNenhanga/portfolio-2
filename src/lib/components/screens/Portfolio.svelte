@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge/index.js';
+	import ExternalIcon from '$lib/assets/ExternalIcon.svelte';
 </script>
 
 <article
@@ -9,8 +10,8 @@
 		<h1 class="text-2xl font-semibold text-white">Theophilus Nenhanga</h1>
 		<h2 class="text-lg font-medium text-gray-300">Full Stack Developer</h2>
 		<p class="text-sm text-gray-400">
-			I build with performance in mind to be kind to the machine, and with accessibility in mind to
-			be kind to humans.
+			I build with performance in mind to be kind to machines, and with usability in mind to be kind
+			to humans.
 		</p>
 	</div>
 
@@ -85,6 +86,41 @@
 					<li>Investigating emerging technologies (e.g. Drupal AI)</li>
 				</ul>
 
+				<p class="mb-3 text-sm text-gray-300">The main projects I worked on were:</p>
+				<ul class="mb-3 list-inside list-disc text-sm text-gray-300">
+					<li>
+						Sandbox Mutual Insurance's <a
+							href="https://sandbox.ca/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-blue-400 hover:underline">website</a
+						>
+						and
+						<a
+							href="https://portal.sandbox.ca/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-blue-400 hover:underline">client portal</a
+						>
+					</li>
+					<li>
+						Saskatchewan Cancer Agency's <a
+							href="https://www.saskcancer.ca/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-blue-400 hover:underline">intranet</a
+						>
+					</li>
+					<li>
+						zu's <a
+							href="https://zu.com/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-blue-400 hover:underline">website</a
+						>
+					</li>
+				</ul>
+
 				<div class="flex flex-wrap gap-2">
 					<Badge>PHP</Badge>
 					<Badge>Drupal</Badge>
@@ -101,9 +137,14 @@
 		<div class="space-y-6">
 			<div>
 				<h4
-					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+					class="group mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
 				>
-					<a href="https://github.com/TheophilusNenhanga/crux-lang">Crux Lang</a>
+					<a
+						class="inline-flex items-center justify-center"
+						href="https://github.com/TheophilusNenhanga/crux-lang"
+						>Crux Lang
+						<ExternalIcon />
+					</a>
 				</h4>
 				<p class="mb-3 text-sm text-gray-300">
 					A custom programming language implementation based on Lox from <a
@@ -139,13 +180,39 @@
 
 			<div>
 				<h4
-					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+					class="group mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
 				>
-					<a href="https://github.com/TheophilusNenhanga/flora-engine">Flora Engine</a>
+					<a
+						class="inline-flex items-center justify-center"
+						href="https://amacsk.itch.io/beach-defenders">Beach Defenders<ExternalIcon /></a
+					>
 				</h4>
 				<p class="mb-3 text-sm text-gray-300">
-					A lightweight UI framework built on SDL3, providing a foundation for creating Graphical
-					User Interfaces.
+					A pirate themed 3D tower defence game built with the Unity Engine. This game features
+					procedurally generated levels with hordes of undead enemies threatening your beach. You
+					are equipped with a sword and a revolver to take down the undead horde and protect your
+					beach.
+				</p>
+				<div class="flex flex-wrap gap-2">
+					<Badge>C#</Badge>
+					<Badge>Unity Engine</Badge>
+					<Badge variant="outline" class="border-gray-600 text-gray-400">3D Game</Badge>
+				</div>
+			</div>
+
+			<div>
+				<h4
+					class="group mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+				>
+					<a
+						class="inline-flex items-center justify-center"
+						href="https://github.com/TheophilusNenhanga/flora-engine"
+						>Flora Engine <ExternalIcon /></a
+					>
+				</h4>
+				<p class="mb-3 text-sm text-gray-300">
+					A lightweight immediate mode rendering UI framework built on SDL3, providing a foundation
+					for creating performant Graphical User Interfaces in C.
 				</p>
 				<div class="flex flex-wrap gap-2">
 					<Badge>C</Badge>
@@ -156,9 +223,12 @@
 
 			<div>
 				<h4
-					class="mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
+					class="group mb-1 text-base font-medium text-white transition-all duration-150 hover:text-blue-300 hover:underline"
 				>
-					<a href="https://github.com/TheophilusNenhanga/jelp">Jelp</a>
+					<a
+						href="https://github.com/TheophilusNenhanga/jelp"
+						class="inline-flex items-center justify-center">Jelp <ExternalIcon /></a
+					>
 				</h4>
 				<p class="mb-3 text-sm text-gray-300">
 					An interactive learning platform designed to make learning Japanese easy.
