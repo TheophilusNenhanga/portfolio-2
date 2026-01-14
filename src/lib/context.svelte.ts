@@ -4,6 +4,8 @@ import Portfolio from './components/screens/Portfolio.svelte';
 import Settings from './components/screens/Settings.svelte';
 import PortfolioIcon from './assets/portfolio.svg';
 import SettingsIcon from './assets/settings.svg';
+import GameIcon from './assets/game.svg';
+import GameDemo from './components/screens/GameDemo.svelte';
 
 export const showTitles = new PersistedState('showTitles', 'true');
 export const windowControlStyle = new PersistedState('windowControlStyle', 'windows');
@@ -79,6 +81,24 @@ export let windows: WindowState[] = $state([
 		height: 600,
 		left: 560,
 		top: 270,
+		hasFocus: false,
+		lastLeft: 0,
+		lastTop: 0,
+		lastWidth: 0,
+		lastHeight: 0,
+		lastState: 'closed'
+	},
+	{
+		zIndex: 0,
+		openState: 'open',
+		name: 'GameDemo',
+		id: 2,
+		icon: GameIcon,
+		component: GameDemo,
+		width: 400,
+		height: 880,
+		left: 860,
+		top: 40,
 		hasFocus: false,
 		lastLeft: 0,
 		lastTop: 0,
