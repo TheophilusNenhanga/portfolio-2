@@ -23,6 +23,8 @@
 		attack: number;
 	};
 
+	type Powerup = {};
+
 	let avatar = $state<Avatar>({
 		head: null,
 		chest: null,
@@ -32,7 +34,10 @@
 		attack: 20
 	});
 
-	let mode = $state<'pre-encounter' | 'encounter'>('pre-encounter');
+	let mode = $state<'pre-encounter' | 'encounter' | 'post-encounter'>('pre-encounter');
+	let win = $state<boolean>(false);
+
+	let rewardClothes = $state<Array<Clothing>>([]);
 
 	let inventory = $state<Array<Clothing>>([
 		{
@@ -138,6 +143,27 @@
 
 	let turnNumber = $state(0);
 
+	function resetGame() {
+		endMsg = '';
+		rollDieVid = false;
+		yourMultiplier = 1;
+		enemyMultiplier = 1;
+		yourDie = 0;
+		enemyDie = 0;
+		yourDamage = 0;
+		enemyDamage = 0;
+		enemy.health = 100;
+
+		avatar.health = 100;
+		avatar.defence = 0;
+		avatar.head = null;
+		avatar.chest = null;
+		avatar.legs = null;
+
+		turnNumber = 0;
+		mode = 'pre-encounter';
+	}
+
 	async function attack(avatar: Avatar, target: Enemy) {
 		rollDieVid = true;
 		await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -159,14 +185,16 @@
 		if (target.health <= 0) {
 			target.health = 0;
 			endMsg = 'You defeated the enemy!';
-			mode = 'pre-encounter';
+			win = true;
+			mode = 'post-encounter';
 		}
 
 		avatar.health -= enemyDamage;
 		if (avatar.health <= 0) {
 			avatar.health = 0;
 			endMsg = 'You were defeated!';
-			mode = 'pre-encounter';
+			win = false;
+			mode = 'post-encounter';
 		}
 		turnNumber++;
 	}
@@ -174,6 +202,7 @@
 
 {#snippet player()}
 	<section class="flex flex-col">
+		<h3 class="text-xl font-bold">Player</h3>
 		<div class="flex flex-col border">
 			<p>Head</p>
 			{#if avatar.head}
@@ -198,29 +227,39 @@
 				<p>No armour equipped here</p>
 			{/if}
 		</div>
+
+		<div class="w-fit border border-black p-2">
+			<h2>Your Stats</h2>
+			<div>
+				<p class="font-bold">health: {avatar.health}</p>
+				<p class="font-bold">defence: {avatar.defence}</p>
+				<p class="font-bold">attack: {avatar.attack}</p>
+			</div>
+		</div>
 	</section>
 {/snippet}
 
-<div class="relative flex flex-col space-y-4">
-	{#if endMsg}
-		<p class="text-center text-2xl font-bold">
-			{endMsg}
-		</p>
-	{/if}
-	{#if mode === 'pre-encounter'}
-		<button
-			onclick={() => (mode = 'encounter')}
-			class="mt-2 ml-2 w-fit cursor-pointer border border-black px-3 py-1 hover:shadow active:scale-90"
-			>Switch to encounter mode</button
-		>
-	{:else if mode === 'encounter'}
-		<button
-			onclick={() => (mode = 'pre-encounter')}
-			class="mt-2 ml-2 w-fit cursor-pointer border border-black px-3 py-1 hover:shadow active:scale-90"
-			>Switch to pre-encounter mode</button
-		>
-	{/if}
+{#snippet enemyMarkup()}
+	<section class="flex flex-col">
+		<div class="flex flex-col">
+			<h3 class="text-xl font-bold">Enemy</h3>
+			<img class="h-24 w-24" src={enemy.sprite} alt="enemy sprite" />
+			<div class="w-fit border border-black p-2">
+				<h2>Enemy Stats</h2>
+				<div>
+					<p class="font-bold">health: {enemy.health}</p>
+					<p class="font-bold">defence: {enemy.defence}</p>
+					<p class="font-bold">attack: {enemy.attack}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+{/snippet}
 
+<div class="relative m-4 flex flex-col space-y-4">
+	<div class="absolute top-0 right-0">
+		<p class="font-serif text-5xl font-extrabold text-muted-foreground">{mode}</p>
+	</div>
 	{#if mode === 'pre-encounter'}
 		{@render player()}
 
@@ -268,17 +307,17 @@
 					{/each}
 				</div>
 			</div>
+			<button
+				onclick={() => (mode = 'encounter')}
+				class="mt-2 ml-2 w-fit cursor-pointer border border-black px-3 py-1 hover:shadow active:scale-90"
+				>Ready to battle with style!</button
+			>
 		</div>
 	{:else if mode === 'encounter'}
 		<div class="flex flex-col space-y-6">
-			{@render player()}
-
-			<div>
-				<p>Enemy</p>
-				<img class="h-24 w-24" src={enemy.sprite} alt="enemy sprite" />
-				<p>defence: {enemy.defence}</p>
-				<p>attack: {enemy.attack}</p>
-				<p>health: {enemy.health}</p>
+			<div class="flex gap-6 border">
+				{@render player()}
+				{@render enemyMarkup()}
 			</div>
 
 			<div class="flex flex-col gap-4">
@@ -321,13 +360,25 @@
 				</div>
 			</div>
 		</div>
-	{/if}
-	<div class="absolute top-28 right-2 border border-black p-2">
-		<h2>Your Stats</h2>
-		<div>
-			<p class="font-bold">health: {avatar.health}</p>
-			<p class="font-bold">defence: {avatar.defence}</p>
-			<p class="font-bold">attack: {avatar.attack}</p>
+	{:else if mode === 'post-encounter'}
+		<div class="flex flex-col gap-4">
+			{#if win}
+				<p>{endMsg}</p>
+
+				<div>
+					<h3 class="text-xl font-bold">Pick a Reward</h3>
+				</div>
+			{:else}
+				<p>{endMsg}</p>
+			{/if}
+
+			<button
+				onclick={() => {
+					resetGame();
+				}}
+				class=" w-fit cursor-pointer border border-black px-3 py-1 hover:shadow-md active:scale-90"
+				>Play Again</button
+			>
 		</div>
-	</div>
+	{/if}
 </div>
