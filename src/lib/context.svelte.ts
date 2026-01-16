@@ -96,7 +96,7 @@ export let windows: WindowState[] = $state([
 		icon: GameIcon,
 		component: GameDemo,
 		width: 800,
-		height: 880,
+		height: 920,
 		left: 860,
 		top: 40,
 		hasFocus: false,
