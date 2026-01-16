@@ -43,7 +43,23 @@
 	let mode = $state<'pre-encounter' | 'encounter' | 'post-encounter'>('pre-encounter');
 	let win = $state<boolean>(false);
 
-	const powerups = [
+	function shuffle(array: unknown[]): unknown[] {
+		let currentIndex = array.length,
+			randomIndex;
+
+		// While there remain elements to shuffle.
+		while (currentIndex !== 0) {
+			// Pick a remaining element.
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex--;
+			// And swap it with the current element using array destructuring.
+			[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+		}
+
+		return array;
+	}
+
+	let powerups: Powerup[] = [
 		{
 			sprite:
 				'https://cdn-media.glamira.com/media/product/newgeneration/view/1/sku/21193gisu1-round/diamond/diamond-zirconia_AAAAA/stone2/diamond-zirconia_AAAAA/stone3/diamond-zirconia_AAAAA/alloycolour/yellow.jpg',
@@ -172,13 +188,13 @@
 			{
 				sprite:
 					'https://grommetsleathercraft.com/wp-content/uploads/2021/06/il_fullxfull.1375806771_7vxz-scaled.jpg',
-				defence: 16,
+				defence: 6,
 				for: 'chest',
 				id: 2
 			},
 			{
 				sprite: 'https://m.media-amazon.com/images/I/61-nCO2WiqL.jpg',
-				defence: 10,
+				defence: 9,
 				for: 'legs',
 				id: 3
 			},
@@ -190,14 +206,14 @@
 			},
 			{
 				sprite: 'https://www.the-larp-store.com/images/product/medium/10263_1_.jpg',
-				defence: 15,
+				defence: 10,
 				for: 'chest',
 				id: 5
 			},
 			{
 				sprite:
 					'https://burgschneider.com/cdn/shop/files/Wasserzeichen-2769.Bckba0.jpg?v=1767496878',
-				defence: 12,
+				defence: 11,
 				for: 'legs',
 				id: 6
 			}
@@ -269,7 +285,7 @@
 		sprite:
 			'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK3KPjPwcINGG6hMNDOANfvmTgIAQ1vrOTnw&s',
 		defence: 15,
-		attack: 20,
+		attack: 15,
 		health: 100
 	});
 
@@ -287,7 +303,10 @@
 		enemyDie = 0;
 		yourDamage = 0;
 		enemyDamage = 0;
+
 		enemy.health = 100;
+		enemy.defence = Math.floor(Math.random() * 10) + 15;
+		enemy.attack = Math.floor(Math.random() * 10) + 15;
 
 		avatar.health = 100;
 		avatar.defence = 0;
@@ -302,7 +321,7 @@
 	function pickRewards() {
 		rewardClothes = [];
 		let nonOwnedItems = extraClothes.filter((item) => !inventory.includes(item));
-		nonOwnedItems = nonOwnedItems.sort(() => Math.random() - 0.5);
+		shuffle(nonOwnedItems);
 		for (let i = 0; i < Math.min(3, nonOwnedItems.length); i++) {
 			rewardClothes.push(nonOwnedItems[i]);
 		}
@@ -342,6 +361,33 @@
 			mode = 'post-encounter';
 		}
 		turnNumber++;
+	}
+
+	function toEncounterMode(): void {
+		encounterPowerups = [];
+		mode = 'encounter';
+		shuffle(powerups);
+		for (let i = 0; i < 3; i++) {
+			encounterPowerups.push(powerups[i]);
+		}
+	}
+
+	function usePowerup(powerup: Powerup): void {
+		switch (powerup.effectTo) {
+			case 'health':
+				avatar.health *= 1 + powerup.value;
+				avatar.health = Math.round(avatar.health);
+				break;
+			case 'attack':
+				avatar.attack *= 1 + powerup.value;
+				avatar.attack = Math.round(avatar.attack);
+				break;
+			case 'defence':
+				avatar.defence *= 1 + powerup.value;
+				avatar.defence = Math.round(avatar.defence);
+				break;
+		}
+		encounterPowerups = encounterPowerups.filter((p) => p !== powerup);
 	}
 </script>
 
@@ -386,7 +432,7 @@
 
 {#snippet enemyMarkup()}
 	<section class="flex flex-col">
-		<div class="flex flex-col">
+		<div class="flex flex-col gap-2">
 			<h3 class="text-xl font-bold">Enemy</h3>
 			<img class="h-24 w-24" src={enemy.sprite} alt="enemy sprite" />
 			<div class="w-fit border border-black p-2">
@@ -416,7 +462,7 @@
 					{#each inventory.filter((item) => item.for === 'head') as item, index (index)}
 						<button
 							onclick={() => equipItem(item)}
-							class="w-fit cursor-pointer border border-black p-2 hover:shadow-md active:scale-90"
+							class="w-fit border border-black p-2 shadow hover:shadow-md"
 						>
 							<img class="h-12 w-12" src={item.sprite} alt={item.for} />
 							<p>defence: {item.defence}</p>
@@ -430,7 +476,7 @@
 					{#each inventory.filter((item) => item.for === 'chest') as item, index (index)}
 						<button
 							onclick={() => equipItem(item)}
-							class="w-fit cursor-pointer border border-black p-2 hover:shadow-md active:scale-90"
+							class="w-fit border border-black p-2 shadow hover:shadow-md"
 						>
 							<img class="h-12 w-12" src={item.sprite} alt={item.for} />
 							<p>defence: {item.defence}</p>
@@ -444,7 +490,7 @@
 					{#each inventory.filter((item) => item.for === 'legs') as item, index (index)}
 						<button
 							onclick={() => equipItem(item)}
-							class="w-fit cursor-pointer border border-black p-2 hover:shadow-md active:scale-90"
+							class="w-fit border border-black p-2 shadow hover:shadow-md"
 						>
 							<img class="h-12 w-12" src={item.sprite} alt={item.for} />
 							<p>defence: {item.defence}</p>
@@ -453,8 +499,8 @@
 				</div>
 			</div>
 			<button
-				onclick={() => (mode = 'encounter')}
-				class="mt-2 ml-2 w-fit cursor-pointer border border-black px-3 py-1 hover:shadow active:scale-90"
+				onclick={toEncounterMode}
+				class="mt-2 ml-2 w-fit border border-black px-3 py-1 hover:shadow"
 				>Ready to battle with style!</button
 			>
 		</div>
@@ -465,12 +511,32 @@
 				{@render enemyMarkup()}
 			</div>
 
+			<div class="flex gap-4">
+				{#each encounterPowerups as powerup, index (index)}
+					<div class="flex flex-col items-center">
+						<button
+							onclick={() => usePowerup(powerup)}
+							class=" overflow-hidden rounded-full border-2 shadow hover:shadow-md {powerup.rarity ===
+							'common'
+								? 'border-green-500'
+								: powerup.rarity === 'uncommon'
+									? 'border-blue-500'
+									: powerup.rarity === 'rare'
+										? 'border-purple-500'
+										: 'border-gray-500'}"
+						>
+							<img class="h-24 w-24" src={powerup.sprite} alt={powerup.name} />
+						</button>
+						<p>{powerup.name}</p>
+					</div>
+				{/each}
+			</div>
+
 			<div class="flex flex-col gap-4">
 				<p>Turn: {turnNumber}</p>
 				<button
 					onclick={() => attack(avatar, enemy)}
-					class=" w-fit cursor-pointer border border-black px-3 py-1 hover:shadow-md active:scale-90"
-					>Attack</button
+					class=" w-fit border border-black px-3 py-1 shadow hover:shadow-md">Attack</button
 				>
 				{#if rollDieVid === true}
 					<div class="flex flex-col items-center justify-center">
@@ -498,9 +564,16 @@
 						<p>Enemy damage: {enemyDamage}</p>
 					</div>
 
-					<div class="flex flex-col text-muted-foreground">
-						<p>Damage formula:</p>
-						<p>((100 - target.defence) / 100) * (avatar.attack * yourMultiplier)</p>
+					<div class="space-y-4 text-muted-foreground">
+						<div>
+							<p>Damage formula:</p>
+							<p>((100 - target.defence) / 100) * (avatar.attack * yourMultiplier)</p>
+						</div>
+						<div>
+							<p>Powerup Effect:</p>
+							<p>avatar.[health|attack|defence] *= 1 + powerup.value;</p>
+							<small>powerup values are between 0 and 1</small>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -519,7 +592,7 @@
 									onclick={() => {
 										pickReward(reward);
 									}}
-									class=" w-fit cursor-pointer border border-black px-3 py-1 hover:shadow-md active:scale-90"
+									class=" w-fit border border-black px-3 py-1 shadow hover:shadow-md"
 								>
 									<img src={reward.sprite} alt="a piece of clothing" class="h-24 w-24" />
 								</button>
@@ -537,9 +610,14 @@
 				onclick={() => {
 					resetGame();
 				}}
-				class=" w-fit cursor-pointer border border-black px-3 py-1 hover:shadow-md active:scale-90"
-				>Play Again</button
+				class="w-fit border border-black px-3 py-1 shadow hover:shadow-md">Play Again</button
 			>
 		</div>
 	{/if}
 </div>
+
+<style>
+	button {
+		@apply cursor-pointer transition-all duration-150 active:scale-90;
+	}
+</style>
