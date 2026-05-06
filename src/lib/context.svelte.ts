@@ -20,6 +20,10 @@ export let windowMaximized = false;
 export const startTop = 24;
 export const endTop = 56;
 export const topBarHeight = 24;
+export function isTopBarVisible() {
+	const isVisible = $derived(showTime.current === 'true' || showDate.current === 'true');
+	return isVisible;
+}
 
 const baseWidth = 800;
 const baseHeight = 600;
@@ -49,7 +53,7 @@ export type WindowState = {
 	lastState: 'minimized' | 'maximized' | 'closed' | 'open';
 };
 
-export let windows: WindowState[] = $state([
+export const windows: WindowState[] = $state([
 	{
 		zIndex: 1,
 		openState: 'open',

@@ -17,6 +17,7 @@
 </script>
 
 <main class="relative hidden h-screen max-h-screen overflow-hidden lg:block">
+	<h1 class="sr-only">Theophilus Nenhanga - Full Stack Developer</h1>
 	<div class="absolute inset-0 bg-blue-400 blur-xs" style="z-index: 0;">
 		<img
 			src={Wall1}

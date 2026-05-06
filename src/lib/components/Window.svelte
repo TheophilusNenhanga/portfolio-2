@@ -30,7 +30,8 @@
 		inactiveWindowBorderWidth,
 		inactiveWindowBorderColor,
 		titleBarColor,
-		titleBarTextColor
+		titleBarTextColor,
+		isTopBarVisible
 	} from '$lib/context.svelte';
 	import TitleBarDot from './TitleBarDot.svelte';
 
@@ -99,6 +100,24 @@
 
 			windows[id].left = newLeft;
 			windows[id].top = newTop;
+
+			if (windows[id].left === window.innerWidth - thisWindow.width) {
+				console.log('You are at the right edge');
+			}
+
+			if (windows[id].top === window.innerHeight - thisWindow.height - endTop) {
+				console.log('You are at the bottom edge');
+			}
+
+			if (windows[id].left === 0) {
+				console.log('You are at the left edge');
+			}
+
+			if (isTopBarVisible() && windows[id].top === topBarHeight) {
+				console.log('You are at the top edge with a visible top bar');
+			} else if (!isTopBarVisible() && windows[id].top == 0) {
+				console.log('You are at the top edge with a hidden top bar');
+			}
 		}
 
 		function onMouseMoveResizing(event: MouseEvent) {
